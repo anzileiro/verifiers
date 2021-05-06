@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Verifiers.Domain\Verifiers.Domain.csproj" />
+    <ProjectReference Include="..\Verifiers.Web\Verifiers.Web.csproj" />
   </ItemGroup>
 
 </Project>

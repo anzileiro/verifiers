@@ -4,7 +4,7 @@ using Verifiers.Domain;
 
 namespace Verifiers.Tests
 {
-    public class PasswordVerifierTest
+    public class PasswordVerifierDomainTest
     {
         [Theory]
         [InlineData("AbTp9!fok")]
