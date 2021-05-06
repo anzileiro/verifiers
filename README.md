@@ -48,9 +48,35 @@ In this project we needed to use the pattern [Chain Of Responsibility](https://e
 
   ```terminal 
     dotnet run --project Verifiers.Web/Verifiers.Web.csproj
-    
-    curl -X GET "https://localhost:5001/v1/Verifiers/passwords/abcdefghkl1@P"
   ````
+  
+  In case of a valid password:
+  
+   ```terminal
+    curl -X GET "https://localhost:5001/v1/Verifiers/passwords/abcdefghkl1@P"
+  ```
+  
+  ```json
+  { 
+    "id":"17fe1a6c-9a82-4c09-aaeb-a9d376273dc7",
+    "valid":true,
+    "message":"The password matches all verifiers and it is valid."
+   }
+  ```
+  
+  In case of an invalid password:
+  
+   ```terminal
+    curl -X GET "https://localhost:5001/v1/Verifiers/passwords/abcdefghkl1@"
+  ```
+  
+  ```json
+  { 
+    "id":"ce37d6d7-fb16-45f3-901d-70e25762ce58",
+    "valid":false,
+    "message":"The password must contains 1 or more upper characters."
+   }
+  ```
   
   Also you could access and test from web:
   
