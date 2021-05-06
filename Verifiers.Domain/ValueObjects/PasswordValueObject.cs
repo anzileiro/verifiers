@@ -5,32 +5,36 @@ namespace Verifiers.Domain.ValueObjects
 
     public class PasswordValueObject : PasswordContractObject
     {
+        private string _password = null;
+        private readonly PasswordCharQuantityValueObject _quantityHandlerVerifier = null;
+        private readonly PasswordContainsDigitValueObject _digitHandlerVerifier = null;
+        private readonly PasswordContainsLowerValueObject _lowerHandlerVerifier = null;
+        private readonly PasswordContainsUpperValueObject _upperHandlerVerifier = null;
+        private readonly PasswordContainsSpecialValueObject _specialHandlerVerifier = null;
+        private readonly PasswordContainsDistinctValueObject _distinctHandlerVerifier = null;
+        private readonly PasswordContainsEmptyValueObject _emptyHandlerVerifier = null;
         public PasswordValueObject(string password)
         {
-            Password = password;
+            this._password = password;
+            this._quantityHandlerVerifier = new PasswordCharQuantityValueObject();
+            this._digitHandlerVerifier = new PasswordContainsDigitValueObject();
+            this._lowerHandlerVerifier = new PasswordContainsLowerValueObject();
+            this._upperHandlerVerifier = new PasswordContainsUpperValueObject();
+            this._specialHandlerVerifier = new PasswordContainsSpecialValueObject();
+            this._distinctHandlerVerifier = new PasswordContainsDistinctValueObject();
+            this._emptyHandlerVerifier = new PasswordContainsEmptyValueObject();
         }
-
-        public string Password { get; private set; }
 
         public void Validate()
         {
+            this._quantityHandlerVerifier.SetNext(this._digitHandlerVerifier);
+            this._digitHandlerVerifier.SetNext(this._lowerHandlerVerifier);
+            this._lowerHandlerVerifier.SetNext(this._upperHandlerVerifier);
+            this._upperHandlerVerifier.SetNext(this._specialHandlerVerifier);
+            this._specialHandlerVerifier.SetNext(this._distinctHandlerVerifier);
+            this._distinctHandlerVerifier.SetNext(this._emptyHandlerVerifier);
 
-            PasswordCharQuantityValueObject quantity = new PasswordCharQuantityValueObject();
-            PasswordContainsDigitValueObject digit = new PasswordContainsDigitValueObject();
-            PasswordContainsLowerValueObject lower = new PasswordContainsLowerValueObject();
-            PasswordContainsUpperValueObject upper = new PasswordContainsUpperValueObject();
-            PasswordContainsSpecialValueObject special = new PasswordContainsSpecialValueObject();
-            PasswordContainsDistinctValueObject distinct = new PasswordContainsDistinctValueObject();
-            PasswordContainsEmptyValueObject empty = new PasswordContainsEmptyValueObject();
-
-            quantity.SetNext(digit);
-            digit.SetNext(lower);
-            lower.SetNext(upper);
-            upper.SetNext(special);
-            special.SetNext(distinct);
-            distinct.SetNext(empty);
-
-            quantity.Handle(this.Password);
+            this._quantityHandlerVerifier.Handle(this._password);
         }
     }
 

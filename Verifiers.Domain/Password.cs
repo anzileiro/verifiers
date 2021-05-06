@@ -5,17 +5,15 @@ namespace Verifiers.Domain
 {
     public class Password
     {
-
+        private string _value = null;
         public Password(string value)
         {
-            Value = value;
+            this._value = value;
         }
-
-        public string Value { get; private set; }
 
         public void Validate()
         {
-            new PasswordValueObject(this.Value).Validate();
+            new PasswordValueObject(this._value).Validate();
         }
     }
 }
